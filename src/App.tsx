@@ -3,13 +3,14 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import Signin from "./module/signin";
-import GetDiaryDeta from "./module/getDiaryDeta";
+import Header from "./module/header";
 
 function App() {
   return (
-    <div className="">
+    <>
+      <Header />
       <Signin />
-    </div>
+    </>
   );
 }
 

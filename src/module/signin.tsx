@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import TextField from "@mui/material/TextField";
 
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -37,61 +45,55 @@ export default function Signin() {
         password: password,
       })
       .then((res) => {
-        console.log(res.headers.client);
-        let client: any = res.headers["client"];
-        let token: any = res.headers["access-token"];
-        let uid: any = res.headers["uid"];
-        Cookies.set("uid", uid);
-        Cookies.set("token", token);
-        Cookies.set("client", client);
+        if (res.status === 200) {
+          let client: any = res.headers["client"];
+          let token: any = res.headers["access-token"];
+          let uid: any = res.headers["uid"];
+          Cookies.set("uid", uid);
+          Cookies.set("token", token);
+          Cookies.set("client", client);
+        }
       });
   };
 
-  //サインイン
-  const deviceSignin = () =>
-    fetch(deviseSinginApi, option)
-      .then((res) => {
-        res.json().then((data) => {
-          if (res.status === 200) {
-            Cookies.set("uid", data.data.uid);
-            setErrorMessage("");
-          } else if (res.status === 401) {
-            console.log(data);
-            setErrorMessage(data.errors);
-          }
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
   return (
     <>
-      <div>Signin</div>
+      <div>サインアップ</div>
       <div>
         <div>{errorMessage}</div>
         <label>
-          Email:
-          <input
+          メールアドレス
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="メールアドレスを入力してください"
+            variant="outlined"
             type="email"
             name="mail"
-            placeholder="メールアドレスを入力してください"
+            size="small"
             value={email}
             onChange={(event) => setEail(event.target.value)}
           />
         </label>
         <br />
         <label>
-          Password:
-          <input
+          パスワード
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="パスワードを入力してください"
+            variant="outlined"
             type="password"
-            name="mail"
-            placeholder="パスワードを入力してください"
+            size="small"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <input type="submit" value="Submit" onClick={onButtonClick} />
+        <div>
+          <Button variant="contained" onClick={onButtonClick}>
+            送信
+          </Button>
+        </div>
       </div>
     </>
   );
