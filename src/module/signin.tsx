@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
+//マテリアル UI
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
 
+//API用のライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
-import { isSetIterator } from "util/types";
+
+import Paper from "@mui/material/Paper";
 
 export default function Signin() {
   //サインインのパラメータ
@@ -58,43 +57,63 @@ export default function Signin() {
 
   return (
     <>
-      <div>サインアップ</div>
-      <div>
-        <div>{errorMessage}</div>
-        <label>
-          メールアドレス
-          <br />
-          <TextField
-            id="outlined-basic"
-            label="メールアドレスを入力してください"
-            variant="outlined"
-            type="email"
-            name="mail"
-            size="small"
-            value={email}
-            onChange={(event) => setEail(event.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          パスワード
-          <br />
-          <TextField
-            id="outlined-basic"
-            label="パスワードを入力してください"
-            variant="outlined"
-            type="password"
-            size="small"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-        <div>
-          <Button variant="contained" onClick={onButtonClick}>
-            送信
-          </Button>
-        </div>
-      </div>
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            "& > :not(style)": {
+              m: 3,
+              p: 3,
+              width: 400,
+              height: 400,
+            },
+          }}
+        >
+          <Paper elevation={4}>
+            <h3>サインアップ</h3>
+            <label>
+              メールアドレス
+              <br />
+              <TextField
+                id="outlined-basic"
+                label="メールアドレスを入力してください"
+                variant="outlined"
+                type="email"
+                name="mail"
+                size="small"
+                value={email}
+                sx={{ width: 300, m: 1 }}
+                onChange={(event) => setEail(event.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              パスワード
+              <br />
+              <TextField
+                id="outlined-basic"
+                label="パスワードを入力してください"
+                variant="outlined"
+                type="password"
+                size="small"
+                value={password}
+                sx={{ width: 300, m: 1 }}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
+            <div>
+              <Button
+                variant="contained"
+                sx={{ width: 250 }}
+                onClick={onButtonClick}
+              >
+                送信
+              </Button>
+            </div>
+          </Paper>
+        </Box>
+      </Container>
     </>
   );
 }
