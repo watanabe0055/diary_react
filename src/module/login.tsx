@@ -70,8 +70,8 @@ export default function FullWidthTabs() {
               variant="fullWidth"
               aria-label="full width tabs example"
             >
-              <Tab label="Item One" {...a11yProps(0)} />
-              <Tab label="Item Two" {...a11yProps(1)} />
+              <Tab label="サインイン" {...a11yProps(0)} />
+              <Tab label="サインアップ" {...a11yProps(1)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} dir={theme.direction}>
