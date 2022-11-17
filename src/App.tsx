@@ -2,14 +2,15 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import Signin from "./module/signin";
-import GetDiaryDeta from "./module/getDiaryDeta";
+import Login from "./module/login";
+import Header from "./module/header";
 
 function App() {
   return (
-    <div className="">
-      <Signin />
-    </div>
+    <>
+      <Header />
+      <Login />
+    </>
   );
 }
 
