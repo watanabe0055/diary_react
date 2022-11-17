@@ -37,7 +37,7 @@ export default function Signin() {
 
   return (
     <>
-      <div>Signin</div>
+      <div>サインアップ</div>
       <div>
         <label>
           Email:
