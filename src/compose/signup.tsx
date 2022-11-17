@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
+//マテリアル UI
+import TextField from "@mui/material/TextField";
+import { Button, Grid, Box } from "@mui/material";
 
+//API用のライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
 
+import Paper from "@mui/material/Paper";
+
 export default function Signin() {
+  //サインインのパラメータ
   const [email, setEail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const deviseSinginApi = "http://localhost:3000/api/v1/auth/sign_up";
 
   //email: "test@example.com",
   //password: "password",
-  let putParam = {
-    body: {
-      email: email,
-      password: password,
-    },
+  const params = {
+    email: email,
+    password: password,
+    password_confirmation: passwordConfirmation,
   };
 
   const option: any = {
@@ -24,44 +31,98 @@ export default function Signin() {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(putParam),
+    body: JSON.stringify(params),
   };
 
-  //サインイン
-  const deviceSignin = () =>
-    fetch(deviseSinginApi, option)
-      .then((res) => res.json().then((data) => console.log(data)))
-      .catch((error) => {
-        console.error("Error:", error);
+  const onButtonClick = () => {
+    axios
+      .post("http://localhost:3000/api/v1/auth", {
+        email: email,
+        password: password,
+        password_confirmation: passwordConfirmation,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          let client: any = res.headers["client"];
+          let token: any = res.headers["access-token"];
+          let uid: any = res.headers["uid"];
+          Cookies.set("client", client);
+          Cookies.set("access-token", token);
+          Cookies.set("uid", uid);
+        }
+      })
+      .catch(function (error) {
+        // Cookieからトークンを削除しています
+        Cookies.remove("client");
+        Cookies.remove("access-token");
+        Cookies.remove("uid");
       });
+  };
 
   return (
     <>
-      <div>サインアップ</div>
-      <div>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+      >
+        <Paper elevation={3} />
+        <h3>サインアップ</h3>
         <label>
-          Email:
-          <input
+          メールアドレス
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="メールアドレスを入力してください"
+            variant="outlined"
             type="email"
             name="mail"
-            placeholder="メールアドレスを入力してください"
+            size="small"
             value={email}
+            sx={{ width: 300, m: 1 }}
             onChange={(event) => setEail(event.target.value)}
           />
         </label>
         <br />
         <label>
-          Password:
-          <input
+          パスワード
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="パスワードを入力してください"
+            variant="outlined"
             type="password"
-            name="mail"
-            placeholder="パスワードを入力してください"
+            size="small"
             value={password}
+            sx={{ width: 300, m: 1 }}
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
-        <input type="submit" value="Submit" onClick={deviceSignin} />
-      </div>
+        <br />
+        <label>
+          パスワード確認用
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="確認用パスワードを入力してください"
+            type="password"
+            size="small"
+            value={passwordConfirmation}
+            sx={{ width: 300, m: 1 }}
+            onChange={(event) => setPasswordConfirmation(event.target.value)}
+          />
+        </label>
+        <div>
+          <Button
+            variant="contained"
+            sx={{ width: 250 }}
+            onClick={onButtonClick}
+          >
+            送信
+          </Button>
+        </div>
+      </Grid>
     </>
   );
 }
