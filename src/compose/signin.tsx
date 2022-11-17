@@ -43,10 +43,16 @@ export default function Signin() {
           let client: any = res.headers["client"];
           let token: any = res.headers["access-token"];
           let uid: any = res.headers["uid"];
-          Cookies.set("uid", uid);
-          Cookies.set("token", token);
           Cookies.set("client", client);
+          Cookies.set("access-token", token);
+          Cookies.set("uid", uid);
         }
+      })
+      .catch(function (error) {
+        // Cookieからトークンを削除しています
+        Cookies.remove("client");
+        Cookies.remove("access-token");
+        Cookies.remove("uid");
       });
   };
 
