@@ -65,7 +65,7 @@ export default function Signin() {
         direction="column"
       >
         <Paper elevation={3} />
-        <h3>サインイン</h3>
+        <h3>ログイン</h3>
         <label>
           メールアドレス
           <br />
@@ -99,10 +99,10 @@ export default function Signin() {
         <div>
           <Button
             variant="contained"
-            sx={{ width: 250 }}
+            sx={{ width: 280, mt: 3, mb: 3 }}
             onClick={onButtonClick}
           >
-            送信
+            ログイン
           </Button>
         </div>
       </Grid>
