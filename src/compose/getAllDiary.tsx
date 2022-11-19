@@ -4,6 +4,8 @@ import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+import { Paper, Box } from "@mui/material";
+
 export default function getAllDiary() {
   const onButtonClick = () => {
     axios
@@ -26,6 +28,19 @@ export default function getAllDiary() {
   return (
     <>
       <div>getAllDiary</div>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          "& > :not(style)": {
+            m: 1,
+            width: 900,
+            height: 180,
+          },
+        }}
+      >
+        <Paper elevation={1}>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Paper>
+      </Box>
     </>
   );
 }
