@@ -3,7 +3,7 @@ import React from "react";
 export default function diaryIndex() {
   return (
     <>
-      <div>diaryIndex</div>
+      <div>Diary一覧</div>
     </>
   );
 }
