@@ -14,8 +14,6 @@ export default function Signin() {
   const [email, setEail] = useState("");
   const [password, setPassword] = useState("");
 
-  const deviseSinginApi = "http://localhost:3000/api/v1/auth/sign_in";
-
   //email: "test@example.com",
   //password: "password",
   const params = {
