@@ -4,7 +4,7 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./atom/header";
+import Header from "./module/header";
 import Login from "./pages/login";
 import DiaryIndex from "./pages/diaryIndex";
 

@@ -24,7 +24,7 @@ export default function header() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Diary_App
+              News
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>

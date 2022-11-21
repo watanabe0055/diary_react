@@ -5,8 +5,18 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 import { Paper, Box } from "@mui/material";
+import { json } from "stream/consumers";
 
 export default function getAllDiary() {
+  type diaryInterface = [
+    id: number,
+    user_id: number,
+    emotion_id: number,
+    diary_hashtag_id: number,
+    title: string,
+    content: string
+  ];
+
   const onButtonClick = () => {
     axios
       .get("http://localhost:3000/api/v1/diary", {
@@ -17,10 +27,16 @@ export default function getAllDiary() {
         },
       })
       .then((res) => {
-        console.log(res);
+        const diaries: diaryInterface[] = [res.data.diary];
+        const diary: any = diaries[0].map((diary: any) => {
+          return (
+            <Paper key={diary.id} elevation={1}>
+              {diary}
+            </Paper>
+          );
+        });
       })
       .catch(function (error) {
-        // Cookieからトークンを削除しています
         console.log(error.response.data);
       });
   };
@@ -38,9 +54,7 @@ export default function getAllDiary() {
             height: 180,
           },
         }}
-      >
-        <Paper elevation={1}>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Paper>
-      </Box>
+      ></Box>
     </>
   );
 }
