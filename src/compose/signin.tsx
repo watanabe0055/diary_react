@@ -38,9 +38,10 @@ export default function Signin() {
       })
       .then((res) => {
         if (res.status === 200) {
-          let client: any = res.headers["client"];
-          let token: any = res.headers["access-token"];
-          let uid: any = res.headers["uid"];
+          const client: any = res.headers["client"];
+          const token: any = res.headers["access-token"];
+          const uid: any = res.headers["uid"];
+          //Cookieの登録
           Cookies.set("client", client);
           Cookies.set("access-token", token);
           Cookies.set("uid", uid);
