@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
+
+import DiaryDetail from "../pages/diaryDetail";
 
 //API用のライブラリ
 import axios from "axios";
@@ -21,6 +23,7 @@ const useValue: any = (diaryTitle: string) => {
 };
 
 export default function GetAllDiary() {
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -46,6 +49,8 @@ export default function GetAllDiary() {
         const diaries: diaryInterface[] = [res.data.diary];
         const diaryP: any = diaries[0].map((diary: any) => {
           console.log(diary);
+          setId(diary.id);
+
           //setTitle(diary.title);
         });
       })
@@ -83,9 +88,13 @@ export default function GetAllDiary() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="outlined" size="medium">
-              詳細
-            </Button>
+            <div>
+              <Link to={`/${id}`}>
+                <Button variant="outlined" size="medium">
+                  詳細
+                </Button>
+              </Link>
+            </div>
           </CardActions>
         </Card>
       </Box>
