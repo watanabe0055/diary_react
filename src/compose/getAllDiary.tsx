@@ -78,7 +78,7 @@ export default function GetAllDiary() {
           },
         }}
       >
-        <Card sx={{ minWidth: 360, maxWidth: 500 }}>
+        <Card sx={{ minWidth: 360, maxWidth: 800 }}>
           <CardContent>
             <Typography sx={{ mb: 0.5 }} color="text.secondary">
               2022-11-25
