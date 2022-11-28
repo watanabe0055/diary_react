@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, Grid } from "@mui/material";
+import { Card, Grid, Button, Stack } from "@mui/material";
 
 export default function diaryDetail() {
   return (
@@ -48,6 +48,26 @@ export default function diaryDetail() {
                 今日初めて雨が降りました！ 今日初めて雨が降りました！
               </h5>
             </Grid>
+          </Grid>
+        </div>
+        <div>
+          <Grid container>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={4}>
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ minWidth: 100 }}
+              >
+                編集
+              </Button>
+            </Grid>
+            <Grid item xs={4}>
+              <Button variant="contained" color="error" sx={{ minWidth: 100 }}>
+                削除
+              </Button>
+            </Grid>
+            <Grid item xs={2}></Grid>
           </Grid>
         </div>
       </Card>
