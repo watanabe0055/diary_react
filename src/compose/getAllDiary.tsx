@@ -36,29 +36,36 @@ export default function GetAllDiary() {
     content: string
   ];
 
-  async function onButtonClick() {
-    axios
-      .get("http://localhost:3000/api/v1/diary", {
-        headers: {
-          uid: Cookies.get("uid"),
-          client: Cookies.get("client"),
-          access_token: Cookies.get("access-token"),
-        },
-      })
-      .then((res) => {
-        const diaries: diaryInterface[] = [res.data.diary];
-        const diaryP: any = diaries[0].map((diary: any) => {
-          console.log(diary);
-          setId(diary.id);
+  const UseEffectSetHandle = (diary: any) => {
+    useEffect(() => {
+      console.log(diary);
+    }, []);
+  };
 
-          //setTitle(diary.title);
+  async function useOnButtonClick() {
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/api/v1/diary", {
+          headers: {
+            uid: Cookies.get("uid"),
+            client: Cookies.get("client"),
+            access_token: Cookies.get("access-token"),
+          },
+        })
+        .then((res) => {
+          const diaries: diaryInterface[] = [res.data.diary];
+          const diary: any = diaries[0].map((diary: any) => {
+            setTitle(diary.title);
+            return;
+          });
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+          return;
         });
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+    }, []);
   }
-  onButtonClick();
+  useOnButtonClick();
   return (
     <>
       <div>Diary一覧</div>
