@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import moment from "moment";
 
 import { Card, Grid, Button, Stack } from "@mui/material";
+import { AnyARecord } from "dns";
 
 export default function GetDiiaryDetail() {
   const [title, setTitle] = useState("");
@@ -17,7 +18,9 @@ export default function GetDiiaryDetail() {
     emotion_id: number,
     diary_hashtag_id: number,
     title: string,
-    content: string
+    content: string,
+    created_at: any,
+    updated_at: any
   ];
 
   async function UseFeathDiaryDetail() {
@@ -32,7 +35,6 @@ export default function GetDiiaryDetail() {
         })
         .then((res) => {
           const diaryDetail: any = [res.data.diary];
-          console.log(diaryDetail);
           setTitle(diaryDetail[0].title);
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
