@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import axios from "axios";
+import Cookies from "js-cookie";
+import moment from "moment";
 
 import { Card, Grid, Button, Stack } from "@mui/material";
 
-export default function diaryDetail() {
+export default function GetDiiaryDetail() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [createdat, setCreatedat] = useState("");
+
+  type diaryInterface = [
+    id: number,
+    user_id: number,
+    emotion_id: number,
+    diary_hashtag_id: number,
+    title: string,
+    content: string
+  ];
+
+  async function UseFeathDiaryDetail() {
+    useEffect(() => {
+      axios
+        .get(`http://localhost:3000/api/v1/diary/105`, {
+          headers: {
+            uid: Cookies.get("uid"),
+            client: Cookies.get("client"),
+            access_token: Cookies.get("access-token"),
+          },
+        })
+        .then((res) => {
+          const diaryDetail: any = [res.data.diary];
+          console.log(diaryDetail);
+          setTitle(diaryDetail[0].title);
+          setContent(diaryDetail[0].content);
+          setCreatedat(diaryDetail[0].created_at);
+        })
+        .catch(function (error) {
+          console.log(error);
+          return;
+        });
+    }, []);
+  }
+  UseFeathDiaryDetail();
   return (
     <>
       <div> Diary詳細</div>
@@ -15,7 +56,7 @@ export default function diaryDetail() {
               </label>
             </Grid>
             <Grid item xs={4}>
-              <h5>2022-10-31</h5>
+              <h5>{moment(createdat).format("YYYY-MM-DD")}</h5>
             </Grid>
           </Grid>
         </div>
@@ -27,7 +68,7 @@ export default function diaryDetail() {
               </label>
             </Grid>
             <Grid item xs={4}>
-              <h5>初めての日記！</h5>
+              <h5>{title}</h5>
             </Grid>
           </Grid>
         </div>
@@ -37,16 +78,7 @@ export default function diaryDetail() {
               <label>コンテンツ</label>
             </Grid>
             <Grid item xs={8}>
-              <h5>
-                今日初めて雨が降りました！
-                今日初めて雨が降りました！今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-                今日初めて雨が降りました！ 今日初めて雨が降りました！
-              </h5>
+              <h5>{content}</h5>
             </Grid>
           </Grid>
         </div>

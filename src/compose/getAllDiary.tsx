@@ -17,11 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 
-const useValue: any = (diaryTitle: string) => {
-  console.log(diaryTitle);
-  return;
-};
-
 export default function GetAllDiary() {
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
@@ -55,6 +50,7 @@ export default function GetAllDiary() {
         .then((res) => {
           const diaries: diaryInterface[] = [res.data.diary];
           const diary: any = diaries[0].map((diary: any) => {
+            console.log(diary);
             setTitle(diary.title);
             return;
           });
