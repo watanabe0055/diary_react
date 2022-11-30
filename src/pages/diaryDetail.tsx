@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 
 import axios from "axios";
 import Cookies from "js-cookie";
 import moment from "moment";
 
-import { Card, Grid, Button, Stack } from "@mui/material";
-import { AnyARecord } from "dns";
+import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
 
 interface State {
-  diary_id: string;
+  diary_id: number;
 }
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function GetDiiaryDetail() {
   const location = useLocation();
@@ -20,6 +32,11 @@ export default function GetDiiaryDetail() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
+
+  //モーダル用のステート
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   type diaryInterface = [
     id: number,
@@ -97,21 +114,59 @@ export default function GetDiiaryDetail() {
           <Grid container>
             <Grid item xs={2}></Grid>
             <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ minWidth: 100 }}
-              >
-                編集
-              </Button>
+              <Link to={`/diary/${2}/update`} state={{ diary_id: "105" }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ minWidth: 100 }}
+                >
+                  編集
+                </Button>
+              </Link>
             </Grid>
             <Grid item xs={4}>
-              <Button variant="contained" color="error" sx={{ minWidth: 100 }}>
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ minWidth: 100 }}
+                onClick={handleOpen}
+              >
                 削除
               </Button>
             </Grid>
             <Grid item xs={2}></Grid>
           </Grid>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                最終確認
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                この日記を削除しますか？
+              </Typography>
+              <Typography>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  sx={{ minWidth: 100 }}
+                >
+                  削除
+                </Button>
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  sx={{ minWidth: 100 }}
+                >
+                  削除
+                </Button>
+              </Typography>
+            </Box>
+          </Modal>
         </div>
       </Card>
     </>
