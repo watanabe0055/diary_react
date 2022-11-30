@@ -4,10 +4,11 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./module/header";
+import Header from "./atom/header";
 import Login from "./pages/login";
 import DiaryIndex from "./pages/diaryIndex";
 import DiaryDetail from "./pages/diaryDetail";
+import DiaryEdit from "./pages/diaryEdit";
 
 import { Button, Grid, Box } from "@mui/material";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path={`/login/`} element={<Login />} />
             <Route path={`/diary/`} element={<DiaryIndex />} />
             <Route path={`/diary/:id`} element={<DiaryDetail />} />
+            <Route path={`/diary/:id/update`} element={<DiaryEdit />} />
           </Routes>
         </BrowserRouter>
       </Grid>

@@ -17,11 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 
-const useValue: any = (diaryTitle: string) => {
-  console.log(diaryTitle);
-  return;
-};
-
 export default function GetAllDiary() {
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
@@ -55,6 +50,7 @@ export default function GetAllDiary() {
         .then((res) => {
           const diaries: diaryInterface[] = [res.data.diary];
           const diary: any = diaries[0].map((diary: any) => {
+            console.log(diary);
             setTitle(diary.title);
             return;
           });
@@ -96,9 +92,9 @@ export default function GetAllDiary() {
           </CardContent>
           <CardActions>
             <div>
-              <Link to={`/${id}`}>
+              <Link to={`/diary/${2}`} state={{ diary_id: "105" }}>
                 <Button variant="outlined" size="medium">
-                  詳細
+                  詳細!
                 </Button>
               </Link>
             </div>
