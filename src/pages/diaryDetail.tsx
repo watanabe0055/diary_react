@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -7,7 +8,15 @@ import moment from "moment";
 import { Card, Grid, Button, Stack } from "@mui/material";
 import { AnyARecord } from "dns";
 
+interface State {
+  diary_id: string;
+}
+
 export default function GetDiiaryDetail() {
+  const location = useLocation();
+  const { diary_id } = location.state as State;
+
+  console.log(diary_id);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
@@ -26,7 +35,7 @@ export default function GetDiiaryDetail() {
   async function UseFeathDiaryDetail() {
     useEffect(() => {
       axios
-        .get(`http://localhost:3000/api/v1/diary/105`, {
+        .get(`http://localhost:3000/api/v1/diary/${diary_id}`, {
           headers: {
             uid: Cookies.get("uid"),
             client: Cookies.get("client"),

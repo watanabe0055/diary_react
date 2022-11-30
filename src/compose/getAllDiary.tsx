@@ -92,9 +92,9 @@ export default function GetAllDiary() {
           </CardContent>
           <CardActions>
             <div>
-              <Link to={`/${id}`}>
+              <Link to={`/diary/${2}`} state={{ diary_id: "105" }}>
                 <Button variant="outlined" size="medium">
-                  詳細
+                  詳細!
                 </Button>
               </Link>
             </div>
