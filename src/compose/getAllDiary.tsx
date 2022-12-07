@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 
-import DiaryDetail from "../pages/diaryDetail";
+//コンポーネント
+import DiaryCard from "../atom/diaryCard";
 
 //API用のライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import {
-  Paper,
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-} from "@mui/material";
-
 export default function GetAllDiary() {
-  const [id, setId] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [diaryDetils, setDiaryDetils] = useState("");
 
   type diaryInterface = [
     id: number,
@@ -31,13 +20,7 @@ export default function GetAllDiary() {
     content: string
   ];
 
-  const UseEffectSetHandle = (diary: any) => {
-    useEffect(() => {
-      console.log(diary);
-    }, []);
-  };
-
-  async function useOnButtonClick() {
+  async function useHandleFeatchAllDiary() {
     useEffect(() => {
       axios
         .get("http://localhost:3000/api/v1/diary", {
@@ -49,9 +32,10 @@ export default function GetAllDiary() {
         })
         .then((res) => {
           const diaries: diaryInterface[] = [res.data.diary];
-          const diary: any = diaries[0].map((diary: any) => {
-            console.log(diary);
-            setTitle(diary.title);
+
+          //diaries[0].mapにすればdiary単体になる
+          const deta: any = diaries.map((diary: any, id: any) => {
+            setDiaryDetils(diary);
             return;
           });
         })
@@ -61,142 +45,12 @@ export default function GetAllDiary() {
         });
     }, []);
   }
-  useOnButtonClick();
+  useHandleFeatchAllDiary();
+
   return (
     <>
       <div>Diary一覧</div>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-          },
-        }}
-      >
-        <Card sx={{ minWidth: 360, maxWidth: 800 }}>
-          <CardContent>
-            <Typography sx={{ mb: 0.5 }} color="text.secondary">
-              2022-11-25
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              タイトルです！
-            </Typography>
-            <Typography variant="h5" component="div">
-              コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！コンテンツです！
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <div>
-              <Link to={`/diary/${2}`} state={{ diary_id: "105" }}>
-                <Button variant="outlined" size="medium">
-                  詳細!
-                </Button>
-              </Link>
-            </div>
-          </CardActions>
-        </Card>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-          },
-        }}
-      >
-        <Card sx={{ minWidth: 360, maxWidth: 500 }}>
-          <CardContent>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              2022-11-25
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              タイトルです！
-            </Typography>
-            <Typography variant="h5" component="div">
-              コンテンツです！
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button variant="outlined" size="medium">
-              詳細
-            </Button>
-          </CardActions>
-        </Card>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-          },
-        }}
-      >
-        <Card sx={{ minWidth: 360 }}>
-          <CardContent>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              2022-11-25
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              タイトルです！
-            </Typography>
-            <Typography variant="h5" component="div">
-              コンテンツです！
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button variant="outlined" size="medium">
-              詳細
-            </Button>
-          </CardActions>
-        </Card>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          "& > :not(style)": {
-            m: 1,
-          },
-        }}
-      >
-        <Card sx={{ minWidth: 360 }}>
-          <CardContent>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              2022-11-25
-            </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              タイトルです！
-            </Typography>
-            <Typography variant="h5" component="div">
-              コンテンツです！
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button variant="outlined" size="medium">
-              詳細
-            </Button>
-          </CardActions>
-        </Card>
-      </Box>
+      <DiaryCard diaryDetils={diaryDetils} />
     </>
   );
 }
