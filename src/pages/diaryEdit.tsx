@@ -3,7 +3,6 @@ import { useParams, useLocation } from "react-router-dom";
 
 export default function DiaryEdit() {
   const params = useParams();
-  console.log(params);
 
   return (
     <>
