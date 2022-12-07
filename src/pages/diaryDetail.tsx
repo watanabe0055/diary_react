@@ -28,7 +28,7 @@ export default function GetDiiaryDetail() {
   const location = useLocation();
   const { diary_id } = location.state as State;
 
-  console.log(diary_id);
+  const [diaryId, setDiaryId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
@@ -49,7 +49,7 @@ export default function GetDiiaryDetail() {
     updated_at: any
   ];
 
-  async function UseFeathDiaryDetail() {
+  function UseFeathDiaryDetail() {
     useEffect(() => {
       axios
         .get(`http://localhost:3000/api/v1/diary/${diary_id}`, {
@@ -61,6 +61,7 @@ export default function GetDiiaryDetail() {
         })
         .then((res) => {
           const diaryDetail: any = [res.data.diary];
+          setDiaryId(diaryDetail[0].id);
           setTitle(diaryDetail[0].title);
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
@@ -114,7 +115,10 @@ export default function GetDiiaryDetail() {
           <Grid container>
             <Grid item xs={2}></Grid>
             <Grid item xs={4}>
-              <Link to={`/diary/${2}/update`} state={{ diary_id: "105" }}>
+              <Link
+                to={`/diary/${diaryId}/update`}
+                state={{ diary_id: diaryId }}
+              >
                 <Button
                   variant="contained"
                   color="success"
