@@ -15,24 +15,10 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const deviseSinginApi = "http://localhost:3000/api/v1/auth/sign_up";
+  const deviseSinginApi = "http://localhost:3000/api/v1/auth";
 
   //email: "test@example.com",
   //password: "password",
-  const params = {
-    email: email,
-    password: password,
-    password_confirmation: passwordConfirmation,
-  };
-
-  const option: any = {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(params),
-  };
 
   const onButtonClick = () => {
     axios
