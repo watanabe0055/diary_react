@@ -47,10 +47,7 @@ export default function FullWidthTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
+  console.log(process.env.REACT_APP_HELLO_WORLD);
 
   return (
     <Grid
