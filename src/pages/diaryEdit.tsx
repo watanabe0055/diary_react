@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import axios from "axios";
 import Cookies from "js-cookie";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 export default function DiaryEdit() {
   const params = useParams();
@@ -21,6 +20,7 @@ export default function DiaryEdit() {
     setContent(content);
   };
 
+  //現在登録されているデータを表示するために、詳細APIを叩く
   function UseFeathDiaryDetail() {
     useEffect(() => {
       axios
@@ -45,7 +45,8 @@ export default function DiaryEdit() {
     }, []);
   }
 
-  //認証が通らないので一時的にBEの認証を削除
+  //TODO:認証が通らないので一時的にBEの認証を削除
+  //編集APIの実行
   function UseFeathDiaryEdit() {
     axios
       .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
@@ -54,9 +55,9 @@ export default function DiaryEdit() {
           client: Cookies.get("client"),
           access_token: Cookies.get("access-token"),
         },
-        title: "test7abcd",
-        content: "content_7abcd",
-        emotion_id: "2",
+        title: title,
+        content: content,
+        //emotion_id: "2",
       })
       .then((res) => {
         console.log(res.data);
