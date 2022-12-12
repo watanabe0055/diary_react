@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import DiaryIndex from "./pages/diaryIndex";
 import DiaryDetail from "./pages/diaryDetail";
 import DiaryEdit from "./pages/diaryEdit";
+import Error from "./pages/error";
 
 import { Button, Grid, Box } from "@mui/material";
 
@@ -29,6 +30,7 @@ function App() {
             <Route path={`/diary/`} element={<DiaryIndex />} />
             <Route path={`/diary/:id`} element={<DiaryDetail />} />
             <Route path={`/diary/:id/update`} element={<DiaryEdit />} />
+            <Route path={`Error`} element={<Error />} />
           </Routes>
         </BrowserRouter>
       </Grid>
