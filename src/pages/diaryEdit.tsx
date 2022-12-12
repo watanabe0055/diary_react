@@ -49,6 +49,7 @@ export default function DiaryEdit() {
     }, []);
   }
 
+  //フロントに400を出すか判断する
   const Render = () => {
     if (isStatus) {
       return <>{SuccsesElm}</>;
@@ -57,6 +58,7 @@ export default function DiaryEdit() {
     }
   };
 
+  //diary詳細APIで２００が返ってきた際に返すエレメント
   const SuccsesElm = (
     <>
       <div>
