@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import Error from "../pages/error";
+
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -11,6 +13,7 @@ export default function DiaryEdit() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
 
   const handleOnEditTitle = (title: string) => {
     setTitle(title);
@@ -37,13 +40,45 @@ export default function DiaryEdit() {
           setTitle(diaryDetail[0].title);
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
+          setIsStatus(true);
         })
         .catch(function (error) {
           console.log(error.response.data);
-          return;
+          setIsStatus(false);
         });
     }, []);
   }
+
+  const Render = () => {
+    if (isStatus) {
+      return <>{SuccsesElm}</>;
+    } else {
+      return <>{Error()}</>;
+    }
+  };
+
+  const SuccsesElm = (
+    <>
+      <div>
+        <div>
+          <p>タイトル</p>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => handleOnEditTitle(e.target.value)}
+          />
+        </div>
+        <div>
+          <p>コンテンツ</p>
+          <textarea
+            value={content}
+            onChange={(e) => handleOnEditContent(e.target.value)}
+          />
+        </div>
+        <button onClick={() => UseFeathDiaryEdit()}>Submit</button>
+      </div>
+    </>
+  );
 
   //TODO:認証が通らないので一時的にBEの認証を削除
   //編集APIの実行
@@ -67,25 +102,5 @@ export default function DiaryEdit() {
       });
   }
   UseFeathDiaryDetail();
-  return (
-    <>
-      <div>diaryEdit</div>
-      <div>
-        <p>タイトル</p>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => handleOnEditTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <p>コンテンツ</p>
-        <textarea
-          value={content}
-          onChange={(e) => handleOnEditContent(e.target.value)}
-        />
-      </div>
-      <button onClick={() => UseFeathDiaryEdit()}>Submit</button>
-    </>
-  );
+  return <>{Render()}</>;
 }
