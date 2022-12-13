@@ -40,7 +40,16 @@ export default function DiaryCard(props: any) {
     }
     return (
       <Style_Card key={index}>
-        <Card sx={{ minWidth: 360, maxWidth: 800 }}>
+        <Card
+          sx={{
+            "@media screen and (min-width:1000px)": {
+              width: "1300px",
+            },
+            "@media screen and (max-width:600px)": {
+              width: ".300pxm",
+            },
+          }}
+        >
           <CardContent>
             <Typography sx={{ mb: 0.5 }} color="text.secondary">
               {moment(diaryDeteils[key].created_at).format("YYYY-MM-DD")}
