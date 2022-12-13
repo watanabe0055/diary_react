@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,7 +33,6 @@ export default function DiaryCard(props: any) {
       diaryDeteils[key].title =
         diaryDeteils[key].title.substring(0, 13) + "...";
     }
-    console.log(diaryDeteils[key].content.length);
     if (diaryDeteils[key].content.length >= 30) {
       diaryDeteils[key].content =
         diaryDeteils[key].content.substring(0, 30) + "...";
@@ -81,6 +80,12 @@ export default function DiaryCard(props: any) {
       </Style_Card>
     );
   });
+
+  function UseSetDocumentTitle() {
+    document.title = process.env.REACT_APP_TITLE_DIARY_INDEX || "読み込み失敗";
+    return;
+  }
+  UseSetDocumentTitle();
   return (
     <>
       <div>{diaryList}</div>
