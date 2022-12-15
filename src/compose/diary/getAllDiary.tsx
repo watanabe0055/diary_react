@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 //コンポーネント
-import DiaryCard from "../atom/diaryCard";
+import DiaryCard from "../../atom/diary/diaryCard";
 
 //API用のライブラリ
 import axios from "axios";

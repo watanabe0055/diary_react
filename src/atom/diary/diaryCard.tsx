@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { setDiaryIndexPageTitle } from "../modules/setPageTitle";
+import { setDiaryIndexPageTitle } from "../../modules/setPageTitle";
 
 //外部ライブラリ
 import moment from "moment";

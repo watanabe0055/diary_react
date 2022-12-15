@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import Error from "../pages/error";
-import { setDiaryEditPageTitle } from "../modules/setPageTitle";
+import Error from "../error";
+import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 
 import axios from "axios";
 import Cookies from "js-cookie";

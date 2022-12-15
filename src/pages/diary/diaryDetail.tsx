@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import moment from "moment";
 
 import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
-import { setDiaryShowPageTitle } from "../modules/setPageTitle";
+import { setDiaryShowPageTitle } from "../../modules/setPageTitle";
 
 interface State {
   diary_id: number;
