@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { setDiaryIndexPageTitle } from "../modules/setPageTitle";
+
 //外部ライブラリ
 import moment from "moment";
 
@@ -24,19 +26,22 @@ const Style_Card_Center = styled.div`
 `;
 
 export default function DiaryCard(props: any) {
+  //ページタイトルの設定
+  setDiaryIndexPageTitle();
   const diaryDeteils: any = props.diaryDetils;
 
   //getAllDiaryからprops（オブジェクト）を受け取って、mapで回す
   const diaryList: any = Object.keys(diaryDeteils).map(function (key, index) {
     //タイトルは13文字で、コンテンツは30文字までしか表示しないでほこっりは省略する
-    if (diaryDeteils[key].title.length >= 13) {
+    if (diaryDeteils[key].title.length >= 16) {
       diaryDeteils[key].title =
-        diaryDeteils[key].title.substring(0, 13) + "...";
+        diaryDeteils[key].title.substring(0, 16) + "...";
     }
     if (diaryDeteils[key].content.length >= 30) {
       diaryDeteils[key].content =
         diaryDeteils[key].content.substring(0, 30) + "...";
     }
+
     return (
       <Style_Card key={index}>
         <Card
@@ -44,7 +49,10 @@ export default function DiaryCard(props: any) {
             "@media screen and (min-width:1000px)": {
               width: "1300px",
             },
-            "@media screen and (max-width:600px)": {
+            "@media screen and (max-width:768px) and (min-width: 480px)": {
+              width: "600px",
+            },
+            "@media screen and (max-width:480px)": {
               width: ".300pxm",
             },
           }}
@@ -54,13 +62,19 @@ export default function DiaryCard(props: any) {
               {moment(diaryDeteils[key].created_at).format("YYYY-MM-DD")}
             </Typography>
             <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
+              sx={{ fontSize: 20 }}
+              variant="h5"
+              component="div"
               gutterBottom
             >
               {diaryDeteils[key].title}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography
+              sx={{ fontSize: 16 }}
+              variant="h5"
+              component="div"
+              gutterBottom
+            >
               {diaryDeteils[key].content}
             </Typography>
           </CardContent>
@@ -81,11 +95,6 @@ export default function DiaryCard(props: any) {
     );
   });
 
-  function UseSetDocumentTitle() {
-    document.title = process.env.REACT_APP_TITLE_DIARY_INDEX || "読み込み失敗";
-    return;
-  }
-  UseSetDocumentTitle();
   return (
     <>
       <div>{diaryList}</div>

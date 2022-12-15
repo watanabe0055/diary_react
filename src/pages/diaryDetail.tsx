@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import moment from "moment";
 
 import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
+import { setDiaryShowPageTitle } from "../modules/setPageTitle";
 
 interface State {
   diary_id: number;
@@ -25,6 +26,10 @@ const style = {
 };
 
 export default function GetDiiaryDetail() {
+  //ページのタイトルを設定
+  setDiaryShowPageTitle();
+
+  //urlのidを取得して編集APIのkeyにする
   const location = useLocation();
   const { diary_id } = location.state as State;
 
