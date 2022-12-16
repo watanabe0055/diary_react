@@ -1,5 +1,5 @@
 import React from "react";
-import GetAllDiary from "../compose/getAllDiary";
+import GetAllDiary from "../../compose/diary/getAllDiary";
 
 import { Grid } from "@mui/material";
 

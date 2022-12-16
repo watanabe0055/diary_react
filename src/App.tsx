@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./atom/header";
 import Login from "./pages/login";
-import DiaryIndex from "./pages/diaryIndex";
-import DiaryDetail from "./pages/diaryDetail";
-import DiaryEdit from "./pages/diaryEdit";
+import DiaryIndex from "./pages/diary/diaryIndex";
+import DiaryDetail from "./pages/diary/diaryDetail";
+import DiaryEdit from "./pages/diary/diaryEdit";
 import Error from "./pages/error";
 
 import { Button, Grid, Box } from "@mui/material";

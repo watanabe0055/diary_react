@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 
+import Error from "../../pages/error";
+
 import axios from "axios";
 import Cookies from "js-cookie";
 import moment from "moment";
 
 import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
+import { setDiaryShowPageTitle } from "../../modules/setPageTitle";
 
 interface State {
   diary_id: number;
@@ -24,14 +27,19 @@ const style = {
   p: 4,
 };
 
-export default function GetDiiaryDetail() {
+export default function GetDiiaryDetail(props: any) {
+  //ページのタイトルを設定
+  setDiaryShowPageTitle();
+
+  //urlのidを取得して編集APIのkeyにする
   const location = useLocation();
-  const { diary_id } = location.state as State;
+  const { diary_id } = (location.state as State) || 0;
 
   const [diaryId, setDiaryId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
 
   //モーダル用のステート
   const [open, setOpen] = React.useState(false);
@@ -65,18 +73,34 @@ export default function GetDiiaryDetail() {
           setTitle(diaryDetail[0].title);
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
+          setIsStatus(true);
         })
         .catch(function (error) {
-          console.log(error);
+          console.log(error.response.data);
+          setIsStatus(false);
           return;
         });
     }, []);
   }
   UseFeathDiaryDetail();
-  return (
+
+  const SuccsesElm = (
     <>
       <div> Diary詳細</div>
-      <Card sx={{ minWidth: 360, maxWidth: 1300, padding: 3 }}>
+      <Card
+        sx={{
+          padding: "12px",
+          "@media screen and (max-width:480px)": {
+            width: "340px",
+          },
+          "@media screen and (min-width:768px)": {
+            width: "720px",
+          },
+          "@media screen and (min-width:990px)": {
+            width: "1300px",
+          },
+        }}
+      >
         <div>
           <Grid container>
             <Grid item xs={2}>
@@ -175,4 +199,14 @@ export default function GetDiiaryDetail() {
       </Card>
     </>
   );
+
+  //フロントに400を出すか判断する
+  const Render = () => {
+    if (isStatus) {
+      return <>{SuccsesElm}</>;
+    } else {
+      return <>{Error()}</>;
+    }
+  };
+  return <>{Render()}</>;
 }
