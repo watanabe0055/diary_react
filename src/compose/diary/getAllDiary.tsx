@@ -31,7 +31,6 @@ export default function GetAllDiary() {
         })
         .then((res) => {
           const diaries: diaryInterface[] = [res.data.diary];
-
           //diaries[0].mapにすればdiary単体になる
           const deta: any = diaries.map((diary: any, id: number) => {
             setDiaryDetils(diary);
@@ -39,7 +38,7 @@ export default function GetAllDiary() {
           });
         })
         .catch(function (error) {
-          console.log(error.response.data);
+          console.log(error.response);
           return;
         });
     }, []);

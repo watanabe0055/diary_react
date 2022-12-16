@@ -39,7 +39,6 @@ export default function GetDiiaryDetail(props: any) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
-
   const [isStatus, setIsStatus] = useState(false);
 
   //モーダル用のステート
@@ -74,11 +73,11 @@ export default function GetDiiaryDetail(props: any) {
           setTitle(diaryDetail[0].title);
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
-          setIsStatus(false);
+          setIsStatus(true);
         })
         .catch(function (error) {
           console.log(error.response.data);
-          setIsStatus(true);
+          setIsStatus(false);
           return;
         });
     }, []);
