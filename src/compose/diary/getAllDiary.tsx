@@ -31,9 +31,9 @@ export default function GetAllDiary() {
         })
         .then((res) => {
           const diaries: diaryInterface[] = [res.data.diary];
-          console.log(res);
+
           //diaries[0].mapにすればdiary単体になる
-          const deta: any = diaries.map((diary: any, id: any) => {
+          const deta: any = diaries.map((diary: any, id: number) => {
             setDiaryDetils(diary);
             return;
           });

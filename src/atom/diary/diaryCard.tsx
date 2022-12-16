@@ -28,6 +28,7 @@ const Style_Card_Center = styled.div`
 export default function DiaryCard(props: any) {
   //ページタイトルの設定
   setDiaryIndexPageTitle();
+
   const diaryDeteils: any = props.diaryDetils;
 
   //getAllDiaryからprops（オブジェクト）を受け取って、mapで回す
@@ -46,14 +47,15 @@ export default function DiaryCard(props: any) {
       <Style_Card key={index}>
         <Card
           sx={{
-            "@media screen and (min-width:1000px)": {
-              width: "1300px",
-            },
-            "@media screen and (max-width:768px) and (min-width: 480px)": {
-              width: "600px",
-            },
+            padding: "12px",
             "@media screen and (max-width:480px)": {
-              width: ".300pxm",
+              width: "340px",
+            },
+            "@media screen and (min-width:768px)": {
+              width: "720px",
+            },
+            "@media screen and (min-width:990px)": {
+              width: "1300px",
             },
           }}
         >
