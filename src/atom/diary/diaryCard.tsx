@@ -20,11 +20,6 @@ const Style_Card = styled.div`
   margin-top: 20px;
 `;
 
-const Style_Card_Center = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 export default function DiaryCard(props: any) {
   //ページタイトルの設定
   setDiaryIndexPageTitle();

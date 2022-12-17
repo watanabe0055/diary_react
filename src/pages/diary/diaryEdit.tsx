@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 
 import axios from "axios";
 import Cookies from "js-cookie";
+
+//マテリアル UI
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
+
+const TextFiledBlock = styled.div`
+  margin-top: 20px;
+`;
 
 export default function DiaryEdit() {
   //ページのタイトルを設定
@@ -66,22 +76,57 @@ export default function DiaryEdit() {
   const SuccsesElm = (
     <>
       <div>
-        <div>
-          <p>タイトル</p>
-          <input
-            type="text"
+        <TextFiledBlock>
+          <TextField
+            id="outlined-multiline-static"
+            label="タイトル"
+            multiline
+            rows={2}
             value={title}
             onChange={(e) => handleOnEditTitle(e.target.value)}
+            sx={{
+              padding: "12px",
+              "@media screen and (max-width:480px)": {
+                width: "340px",
+              },
+              "@media screen and (min-width:768px)": {
+                width: "720px",
+              },
+              "@media screen and (min-width:990px)": {
+                width: "1300px",
+              },
+            }}
           />
-        </div>
-        <div>
-          <p>コンテンツ</p>
-          <textarea
+        </TextFiledBlock>
+        <TextFiledBlock>
+          <TextField
+            id="filled-multiline-static"
+            label="コンテンツ"
+            multiline
+            rows={8}
             value={content}
             onChange={(e) => handleOnEditContent(e.target.value)}
+            sx={{
+              padding: "12px",
+              "@media screen and (max-width:480px)": {
+                width: "340px",
+              },
+              "@media screen and (min-width:768px)": {
+                width: "720px",
+              },
+              "@media screen and (min-width:990px)": {
+                width: "1300px",
+              },
+            }}
           />
-        </div>
-        <button onClick={() => UseFeathDiaryEdit()}>Submit</button>
+        </TextFiledBlock>
+        <Button
+          onClick={() => UseFeathDiaryEdit()}
+          variant="contained"
+          endIcon={<SendIcon />}
+        >
+          送信
+        </Button>
       </div>
     </>
   );
