@@ -3,8 +3,8 @@ import { useTheme } from "@mui/material/styles";
 import { Typography, AppBar, Tab, Tabs, Grid, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
-import Signin from "../compose/signin";
-import Signup from "../compose/signup";
+import Signin from "../../compose/signin";
+import Signup from "../../compose/signup";
 
 interface TabPanelProps {
   children?: React.ReactNode;

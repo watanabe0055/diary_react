@@ -5,7 +5,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./atom/header";
-import Login from "./pages/login";
+import Login from "./pages/login/login";
 import DiaryIndex from "./pages/diary/diaryIndex";
 import DiaryDetail from "./pages/diary/diaryDetail";
 import DiaryEdit from "./pages/diary/diaryEdit";
