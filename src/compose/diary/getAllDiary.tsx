@@ -53,7 +53,6 @@ export default function GetAllDiary() {
     if (isStatus) {
       return (
         <>
-          <div>Diary一覧</div>
           <DiaryCard diaryDetils={diaryDetils} />
         </>
       );

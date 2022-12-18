@@ -27,7 +27,7 @@ export default function DiaryEdit() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
-  const [isStatus, setIsStatus] = useState(false);
+  const [isStatus, setIsStatus] = useState(true);
 
   const handleOnEditTitle = (title: string) => {
     setTitle(title);
@@ -36,6 +36,15 @@ export default function DiaryEdit() {
   const handleOnEditContent = (content: string) => {
     setContent(content);
   };
+
+  const generalApiInterface = axios.create({
+    baseURL: `http://localhost:3000/api/v1/diary/${Number(params.id)}`,
+    headers: {
+      uid: Cookies.get("uid"),
+      client: Cookies.get("client"),
+      access_token: Cookies.get("access-token"),
+    },
+  });
 
   //現在登録されているデータを表示するために、詳細APIを叩く
   function UseFeathDiaryDetail() {
@@ -134,7 +143,7 @@ export default function DiaryEdit() {
   //TODO:認証が通らないので一時的にBEの認証を削除
   //編集APIの実行
   function UseFeathDiaryEdit() {
-    axios
+    generalApiInterface
       .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
         headers: {
           uid: Cookies.get("uid"),

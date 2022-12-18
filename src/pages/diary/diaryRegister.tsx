@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -17,6 +18,8 @@ export default function DiaryRegister() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  const navigation = useNavigate();
+
   const generalApiInterface = axios.create({
     baseURL: `http://localhost:3000/api/v1/diary/`,
     headers: {
@@ -27,7 +30,6 @@ export default function DiaryRegister() {
   });
 
   function UseFeathDiaryCreate() {
-    console.log("test");
     generalApiInterface
       .post(`http://localhost:3000/api/v1/diary/`, {
         title: title,
@@ -35,6 +37,7 @@ export default function DiaryRegister() {
         emotion_id: "2",
       })
       .then((res) => {
+        navigation("/diary", { state: { flag: "succes" } });
         console.log(res);
       })
       .catch(function (error) {
