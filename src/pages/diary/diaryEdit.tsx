@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Error from "../error";
@@ -22,6 +22,7 @@ export default function DiaryEdit() {
   setDiaryEditPageTitle();
 
   const params = useParams();
+  const navigation = useNavigate();
 
   const [diaryId, setDiaryId] = useState("");
   const [title, setTitle] = useState("");
@@ -37,6 +38,7 @@ export default function DiaryEdit() {
     setContent(content);
   };
 
+  //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
   const generalApiInterface = axios.create({
     baseURL: `http://localhost:3000/api/v1/diary/${Number(params.id)}`,
     headers: {
@@ -155,7 +157,7 @@ export default function DiaryEdit() {
         //emotion_id: "2",
       })
       .then((res) => {
-        console.log(res.data);
+        navigation("/diary", { state: "Diaryの編集に成功しました！！" });
       })
       .catch(function (error) {
         console.error(error.response.data);

@@ -7,14 +7,22 @@ import Alert from "@mui/material/Alert";
 
 export default function DiaryIndex() {
   const location = useLocation();
+  const [succes, setSucces] = useState();
 
-  //const Render = () => {
-  //  if (location.state.flag == "succes") {
-  //    console.log("成功");
-  //  } else {
-  //    console.log("失敗");
-  //  }
-  //};
+  console.log(location.state);
+  const Render = () => {
+    if (location.state != null) {
+      console.log("成功");
+      return (
+        <>
+          <Alert severity="success">{location.state}</Alert>
+        </>
+      );
+    } else {
+      console.log("失敗");
+      return <></>;
+    }
+  };
   return (
     <>
       <Grid
@@ -24,6 +32,7 @@ export default function DiaryIndex() {
         direction="column"
       >
         <div>Diary一覧</div>
+        <div>{Render()}</div>
         <GetAllDiary />
       </Grid>
     </>

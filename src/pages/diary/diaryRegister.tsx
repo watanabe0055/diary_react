@@ -37,7 +37,7 @@ export default function DiaryRegister() {
         emotion_id: "2",
       })
       .then((res) => {
-        navigation("/diary", { state: { flag: "succes" } });
+        navigation("/diary", { state: "Diaryの作成に成功しました！！" });
         console.log(res);
       })
       .catch(function (error) {
