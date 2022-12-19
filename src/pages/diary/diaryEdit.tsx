@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
@@ -7,17 +8,27 @@ import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+//マテリアル UI
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
+
+const TextFiledBlock = styled.div`
+  margin-top: 20px;
+`;
+
 export default function DiaryEdit() {
   //ページのタイトルを設定
   setDiaryEditPageTitle();
 
   const params = useParams();
+  const navigation = useNavigate();
 
   const [diaryId, setDiaryId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
-  const [isStatus, setIsStatus] = useState(false);
+  const [isStatus, setIsStatus] = useState(true);
 
   const handleOnEditTitle = (title: string) => {
     setTitle(title);
@@ -26,6 +37,16 @@ export default function DiaryEdit() {
   const handleOnEditContent = (content: string) => {
     setContent(content);
   };
+
+  //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
+  const generalApiInterface = axios.create({
+    baseURL: `http://localhost:3000/api/v1/diary/${Number(params.id)}`,
+    headers: {
+      uid: Cookies.get("uid"),
+      client: Cookies.get("client"),
+      access_token: Cookies.get("access-token"),
+    },
+  });
 
   //現在登録されているデータを表示するために、詳細APIを叩く
   function UseFeathDiaryDetail() {
@@ -66,22 +87,57 @@ export default function DiaryEdit() {
   const SuccsesElm = (
     <>
       <div>
-        <div>
-          <p>タイトル</p>
-          <input
-            type="text"
+        <TextFiledBlock>
+          <TextField
+            id="outlined-multiline-static"
+            label="タイトル"
+            multiline
+            rows={2}
             value={title}
             onChange={(e) => handleOnEditTitle(e.target.value)}
+            sx={{
+              padding: "12px",
+              "@media screen and (max-width:480px)": {
+                width: "340px",
+              },
+              "@media screen and (min-width:768px)": {
+                width: "720px",
+              },
+              "@media screen and (min-width:990px)": {
+                width: "1300px",
+              },
+            }}
           />
-        </div>
-        <div>
-          <p>コンテンツ</p>
-          <textarea
+        </TextFiledBlock>
+        <TextFiledBlock>
+          <TextField
+            id="filled-multiline-static"
+            label="コンテンツ"
+            multiline
+            rows={8}
             value={content}
             onChange={(e) => handleOnEditContent(e.target.value)}
+            sx={{
+              padding: "12px",
+              "@media screen and (max-width:480px)": {
+                width: "340px",
+              },
+              "@media screen and (min-width:768px)": {
+                width: "720px",
+              },
+              "@media screen and (min-width:990px)": {
+                width: "1300px",
+              },
+            }}
           />
-        </div>
-        <button onClick={() => UseFeathDiaryEdit()}>Submit</button>
+        </TextFiledBlock>
+        <Button
+          onClick={() => UseFeathDiaryEdit()}
+          variant="contained"
+          endIcon={<SendIcon />}
+        >
+          送信
+        </Button>
       </div>
     </>
   );
@@ -89,7 +145,7 @@ export default function DiaryEdit() {
   //TODO:認証が通らないので一時的にBEの認証を削除
   //編集APIの実行
   function UseFeathDiaryEdit() {
-    axios
+    generalApiInterface
       .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
         headers: {
           uid: Cookies.get("uid"),
@@ -101,7 +157,7 @@ export default function DiaryEdit() {
         //emotion_id: "2",
       })
       .then((res) => {
-        console.log(res.data);
+        navigation("/diary", { state: "Diaryの編集に成功しました！！" });
       })
       .catch(function (error) {
         console.error(error.response.data);

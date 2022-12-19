@@ -15,19 +15,25 @@ const LogoImage = styled.img`
   height: auto;
 `;
 
+const HeaderMargin = styled.div`
+  margin-bottom: 40px;
+`;
+
 export default function header() {
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <LogoImage src={Logo} alt="sample" />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              DIARY
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <HeaderMargin>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <Toolbar>
+              <LogoImage src={Logo} alt="sample" />
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                DIARY
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </Box>
+      </HeaderMargin>
     </>
   );
 }
