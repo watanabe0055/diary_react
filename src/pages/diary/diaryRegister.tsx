@@ -9,14 +9,21 @@ import Cookies from "js-cookie";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
+import { count } from "console";
 
 const TextFiledBlock = styled.div`
   margin-top: 20px;
 `;
 
+const Counter = styled.div`
+  margin-left: 20px;
+`;
+
 export default function DiaryRegister() {
   const [title, setTitle] = useState("");
+  const [titleCount, setTitleCount] = useState(100);
   const [content, setContent] = useState("");
+  const [countCount, setCountCount] = useState(4000);
 
   const navigation = useNavigate();
 
@@ -47,10 +54,12 @@ export default function DiaryRegister() {
 
   const handleOnCreatetTitle = (title: string) => {
     setTitle(title);
+    setTitleCount(100 - title.length);
   };
 
   const handleOnCreatetContent = (content: string) => {
     setContent(content);
+    setCountCount(4000 - content.length);
   };
 
   const SuccsesElm = (
@@ -58,6 +67,7 @@ export default function DiaryRegister() {
       <div>
         <TextFiledBlock>
           <TextField
+            inputProps={{ maxLength: 100 }}
             id="outlined-multiline-static"
             label="タイトル"
             multiline
@@ -77,9 +87,11 @@ export default function DiaryRegister() {
               },
             }}
           />
+          <Counter>後{titleCount}文字入力可能です</Counter>
         </TextFiledBlock>
         <TextFiledBlock>
           <TextField
+            inputProps={{ maxLength: 4000 }}
             id="filled-multiline-static"
             label="コンテンツ"
             multiline
@@ -99,11 +111,13 @@ export default function DiaryRegister() {
               },
             }}
           />
+          <Counter>後{countCount}文字入力可能です</Counter>
         </TextFiledBlock>
         <Button
           onClick={() => UseFeathDiaryCreate()}
           variant="contained"
           endIcon={<SendIcon />}
+          sx={{ marginTop: "20px", width: "230px" }}
         >
           送信
         </Button>
