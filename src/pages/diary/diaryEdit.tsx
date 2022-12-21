@@ -1,12 +1,15 @@
+//Reactコンポネート
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
+//自作コンポーネント
 import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 
+//外部ライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
+import styled from "styled-components";
 
 //マテリアル UI
 import Button from "@mui/material/Button";
@@ -17,6 +20,16 @@ const TextFiledBlock = styled.div`
   margin-top: 20px;
 `;
 
+const Counter = styled.div`
+  margin-left: 20px;
+  color: #000;
+`;
+
+const ErrorMessage = styled.div`
+  margin-left: 20px;
+  color: red;
+`;
+
 export default function DiaryEdit() {
   //ページのタイトルを設定
   setDiaryEditPageTitle();
@@ -25,17 +38,26 @@ export default function DiaryEdit() {
   const navigation = useNavigate();
 
   const [diaryId, setDiaryId] = useState("");
+
   const [title, setTitle] = useState("");
+  const [titleCount, setTitleCount] = useState(100);
+  const [titleValidation, setTitleValidation] = useState("");
+
   const [content, setContent] = useState("");
+  const [countCount, setCountCount] = useState(4000);
+  const [contentValidation, setContentValidation] = useState("");
+
   const [createdat, setCreatedat] = useState("");
   const [isStatus, setIsStatus] = useState(true);
 
   const handleOnEditTitle = (title: string) => {
     setTitle(title);
+    setTitleCount(100 - title.length);
   };
 
   const handleOnEditContent = (content: string) => {
     setContent(content);
+    setCountCount(4000 - content.length);
   };
 
   //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
@@ -49,6 +71,7 @@ export default function DiaryEdit() {
   });
 
   //現在登録されているデータを表示するために、詳細APIを叩く
+  //即時実行してます
   function UseFeathDiaryDetail() {
     useEffect(() => {
       axios
@@ -66,12 +89,49 @@ export default function DiaryEdit() {
           setContent(diaryDetail[0].content);
           setCreatedat(diaryDetail[0].created_at);
           setIsStatus(true);
+
+          setTitleCount(100 - diaryDetail[0].title.length);
+          setCountCount(4000 - diaryDetail[0].content.length);
         })
         .catch(function (error) {
           console.log(error.response.data);
           setIsStatus(false);
         });
     }, []);
+  }
+
+  UseFeathDiaryDetail();
+
+  //編集APIの実行
+  function UseFeathDiaryEdit() {
+    generalApiInterface
+      .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
+        headers: {
+          uid: Cookies.get("uid"),
+          client: Cookies.get("client"),
+          access_token: Cookies.get("access-token"),
+        },
+        title: title,
+        content: content,
+        //emotion_id: "2",
+      })
+      .then((res) => {
+        navigation("/diary", { state: "Diaryの編集に成功しました！！" });
+      })
+      .catch(function (error) {
+        const errorResponse = error.response.data;
+        console.log(errorResponse.message);
+        setTitleValidation("");
+        setContentValidation("");
+        if (errorResponse.message.title) {
+          setTitleValidation("タイトルは1文字以上100文字以下にしてください");
+        }
+        if (errorResponse.message.content) {
+          setContentValidation(
+            "コンテンツは1文字以上4000文字以下にしてください"
+          );
+        }
+      });
   }
 
   //フロントに400を出すか判断する
@@ -108,6 +168,8 @@ export default function DiaryEdit() {
               },
             }}
           />
+          <ErrorMessage>{titleValidation}</ErrorMessage>
+          <Counter>後{titleCount}文字入力可能です</Counter>
         </TextFiledBlock>
         <TextFiledBlock>
           <TextField
@@ -131,38 +193,19 @@ export default function DiaryEdit() {
             }}
           />
         </TextFiledBlock>
+
+        <ErrorMessage>{contentValidation}</ErrorMessage>
+        <Counter>後{countCount}文字入力可能です</Counter>
         <Button
           onClick={() => UseFeathDiaryEdit()}
           variant="contained"
           endIcon={<SendIcon />}
+          sx={{ marginTop: "20px", width: "230px" }}
         >
           送信
         </Button>
       </div>
     </>
   );
-
-  //TODO:認証が通らないので一時的にBEの認証を削除
-  //編集APIの実行
-  function UseFeathDiaryEdit() {
-    generalApiInterface
-      .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
-        headers: {
-          uid: Cookies.get("uid"),
-          client: Cookies.get("client"),
-          access_token: Cookies.get("access-token"),
-        },
-        title: title,
-        content: content,
-        //emotion_id: "2",
-      })
-      .then((res) => {
-        navigation("/diary", { state: "Diaryの編集に成功しました！！" });
-      })
-      .catch(function (error) {
-        console.error(error.response.data);
-      });
-  }
-  UseFeathDiaryDetail();
   return <>{Render()}</>;
 }
