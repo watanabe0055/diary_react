@@ -17,13 +17,21 @@ const TextFiledBlock = styled.div`
 
 const Counter = styled.div`
   margin-left: 20px;
+  color: #000;
+`;
+
+const ErrorMessage = styled.div`
+  margin-left: 20px;
+  color: red;
 `;
 
 export default function DiaryRegister() {
   const [title, setTitle] = useState("");
   const [titleCount, setTitleCount] = useState(100);
+  const [titleValidation, setTitleValidation] = useState("");
   const [content, setContent] = useState("");
   const [countCount, setCountCount] = useState(4000);
+  const [contentValidation, setContentValidation] = useState("");
 
   const navigation = useNavigate();
 
@@ -44,11 +52,25 @@ export default function DiaryRegister() {
         emotion_id: "2",
       })
       .then((res) => {
-        navigation("/diary", { state: "Diaryの作成に成功しました！！" });
         console.log(res);
+        navigation("/diary", { state: "Diaryの作成に成功しました！！" });
+        setTitleValidation("");
       })
       .catch(function (error) {
-        console.log(error.response.data);
+        const errorResponse = error.response.data;
+        console.log(errorResponse.message);
+        setTitleValidation("");
+        setContentValidation("");
+        if (errorResponse.message.title) {
+          console.log("タイトルバリデーション発生");
+          setTitleValidation("タイトルは1文字以上100文字以下にしてください");
+        }
+        if (errorResponse.message.content) {
+          setContentValidation(
+            "コンテンツは1文字以上4000文字以下にしてください"
+          );
+        }
+        console.log();
       });
   }
 
@@ -87,6 +109,7 @@ export default function DiaryRegister() {
               },
             }}
           />
+          <ErrorMessage>{titleValidation}</ErrorMessage>
           <Counter>後{titleCount}文字入力可能です</Counter>
         </TextFiledBlock>
         <TextFiledBlock>
@@ -111,6 +134,7 @@ export default function DiaryRegister() {
               },
             }}
           />
+          <ErrorMessage>{contentValidation}</ErrorMessage>
           <Counter>後{countCount}文字入力可能です</Counter>
         </TextFiledBlock>
         <Button
