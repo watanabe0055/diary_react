@@ -1,15 +1,16 @@
+//Reactコンポネート
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+//外部ライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
+import styled from "styled-components";
 
 //マテリアル UI
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import { count } from "console";
 
 const TextFiledBlock = styled.div`
   margin-top: 20px;
@@ -62,7 +63,6 @@ export default function DiaryRegister() {
         setTitleValidation("");
         setContentValidation("");
         if (errorResponse.message.title) {
-          console.log("タイトルバリデーション発生");
           setTitleValidation("タイトルは1文字以上100文字以下にしてください");
         }
         if (errorResponse.message.content) {
@@ -70,7 +70,6 @@ export default function DiaryRegister() {
             "コンテンツは1文字以上4000文字以下にしてください"
           );
         }
-        console.log();
       });
   }
 
