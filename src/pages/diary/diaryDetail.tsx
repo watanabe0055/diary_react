@@ -3,13 +3,16 @@ import { useLocation } from "react-router-dom";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 
 import Error from "../../pages/error";
+import DeleteDiaryDeta from "../../modules/diary/deleteDiaryDeta";
 
 import axios from "axios";
 import Cookies from "js-cookie";
 import moment from "moment";
+import styled from "styled-components";
 
 import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
 import { setDiaryShowPageTitle } from "../../modules/setPageTitle";
+import ArticleIcon from "@mui/icons-material/Article";
 
 interface State {
   diary_id: number;
@@ -26,6 +29,16 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
+const ThreadLink = styled(Link)`
+  text-decoration: none;
+  color: #222222;
+  font-size: 18px;
+  margin: 5px 0;
+  &:hover {
+    color: #439a97;
+  }
+`;
 
 export default function GetDiiaryDetail(props: any) {
   //ページのタイトルを設定
@@ -83,6 +96,36 @@ export default function GetDiiaryDetail(props: any) {
     }, []);
   }
   UseFeathDiaryDetail();
+
+  const generalApiInterface = axios.create({
+    baseURL: `http://localhost:3000/api/v1/diary/${Number(diaryId)}`,
+    headers: {
+      uid: Cookies.get("uid"),
+      client: Cookies.get("client"),
+      access_token: Cookies.get("access-token"),
+    },
+  });
+
+  //削除API
+  function UseFeathDiaryDelete() {
+    generalApiInterface
+      .delete(`http://localhost:3000/api/v1/diary/${Number(diaryId)}`, {
+        headers: {
+          uid: Cookies.get("uid"),
+          client: Cookies.get("client"),
+          access_token: Cookies.get("access-token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        return 0;
+      })
+      .catch(function (error) {
+        const errorResponse = error.response.data;
+        console.log(errorResponse.message);
+        return 0;
+      });
+  }
 
   const SuccsesElm = (
     <>
@@ -182,6 +225,7 @@ export default function GetDiiaryDetail(props: any) {
                   variant="contained"
                   color="warning"
                   sx={{ minWidth: 100 }}
+                  onClick={() => UseFeathDiaryDelete()}
                 >
                   削除
                 </Button>
@@ -190,13 +234,19 @@ export default function GetDiiaryDetail(props: any) {
                   color="inherit"
                   sx={{ minWidth: 100 }}
                 >
-                  削除
+                  キャンセル
                 </Button>
               </Typography>
             </Box>
           </Modal>
         </div>
       </Card>
+      <Button variant="text">
+        <ThreadLink to="/diary">
+          <ArticleIcon />
+          一覧へ戻る
+        </ThreadLink>
+      </Button>
     </>
   );
 

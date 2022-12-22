@@ -12,14 +12,12 @@ export default function DiaryIndex() {
   console.log(location.state);
   const Render = () => {
     if (location.state != null) {
-      console.log("成功");
       return (
         <>
           <Alert severity="success">{location.state}</Alert>
         </>
       );
     } else {
-      console.log("失敗");
       return <></>;
     }
   };

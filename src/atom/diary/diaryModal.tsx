@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  Card,
-  Grid,
-  Button,
-  Stack,
-  Modal,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Button, Modal, Box, Typography } from "@mui/material";
+
+//自作コンポーネント
+import DeleteDiaryDeta from "../../modules/diary/deleteDiaryDeta";
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,11 +38,16 @@ export default function UseDiaryModal() {
             この日記を削除しますか？
           </Typography>
           <Typography>
-            <Button variant="contained" color="warning" sx={{ minWidth: 100 }}>
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ minWidth: 100 }}
+              onClick={DeleteDiaryDeta()}
+            >
               削除
             </Button>
             <Button variant="contained" color="inherit" sx={{ minWidth: 100 }}>
-              削除
+              キャンセル
             </Button>
           </Typography>
         </Box>

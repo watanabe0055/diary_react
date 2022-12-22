@@ -53,13 +53,11 @@ export default function DiaryRegister() {
         emotion_id: "2",
       })
       .then((res) => {
-        console.log(res);
         navigation("/diary", { state: "Diaryの作成に成功しました！！" });
         setTitleValidation("");
       })
       .catch(function (error) {
         const errorResponse = error.response.data;
-        console.log(errorResponse.message);
         setTitleValidation("");
         setContentValidation("");
         if (errorResponse.message.title) {
