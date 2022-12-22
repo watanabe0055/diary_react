@@ -1,15 +1,26 @@
+//hooks
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
+//自作コンポーネント
 import Error from "../../pages/error";
 import DeleteDiaryDeta from "../../modules/diary/deleteDiaryDeta";
 
+//外部ライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
 import moment from "moment";
 import styled from "styled-components";
 
+//マテリアルUI
 import { Card, Grid, Button, Modal, Box, Typography } from "@mui/material";
 import { setDiaryShowPageTitle } from "../../modules/setPageTitle";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -43,6 +54,8 @@ const ThreadLink = styled(Link)`
 export default function GetDiiaryDetail(props: any) {
   //ページのタイトルを設定
   setDiaryShowPageTitle();
+
+  const navigation = useNavigate();
 
   //urlのidを取得して編集APIのkeyにする
   const location = useLocation();
@@ -118,6 +131,7 @@ export default function GetDiiaryDetail(props: any) {
       })
       .then((res) => {
         console.log(res);
+        navigation("/diary", { state: `タイトル:${title}を削除にしました` });
         return 0;
       })
       .catch(function (error) {
@@ -233,6 +247,7 @@ export default function GetDiiaryDetail(props: any) {
                   variant="contained"
                   color="inherit"
                   sx={{ minWidth: 100 }}
+                  onClick={() => handleClose()}
                 >
                   キャンセル
                 </Button>
