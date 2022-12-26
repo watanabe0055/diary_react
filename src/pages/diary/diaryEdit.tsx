@@ -94,7 +94,6 @@ export default function DiaryEdit() {
           setCountCount(4000 - diaryDetail[0].content.length);
         })
         .catch(function (error) {
-          console.log(error.response.data);
           setIsStatus(false);
         });
     }, []);
@@ -120,7 +119,6 @@ export default function DiaryEdit() {
       })
       .catch(function (error) {
         const errorResponse = error.response.data;
-        console.log(errorResponse.message);
         setTitleValidation("");
         setContentValidation("");
         if (errorResponse.message.title) {

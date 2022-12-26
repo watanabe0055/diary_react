@@ -27,14 +27,10 @@ export default function DeleteDiaryDeta(): any {
           access_token: Cookies.get("access-token"),
         },
       })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch(function (error) {
         const errorResponse = error.response.data;
-        console.log(errorResponse.message);
       });
   }
   UseFeathDiaryDelete();
-  return 0;
 }
