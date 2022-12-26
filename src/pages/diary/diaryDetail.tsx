@@ -12,8 +12,8 @@ import {
 
 //自作コンポーネント
 import Error from "../../pages/error";
-import DeleteDiaryDeta from "../../modules/diary/deleteDiaryDeta";
 import { featchDiary } from "../../modules/featchDiary";
+import { deleteDiary } from "../../modules/diary/diaryDelete";
 
 //外部ライブラリ
 import axios from "axios";
@@ -75,7 +75,7 @@ export default function GetDiiaryDetail() {
   const location = useLocation();
   const { diary_id } = (location.state as State) || 0;
 
-  const [diaryId, setDiaryId] = useState("");
+  const [diaryId, setDiaryId] = useState(0);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [createdat, setCreatedat] = useState("");
@@ -97,36 +97,16 @@ export default function GetDiiaryDetail() {
   }
   fetchDiaryDeta();
 
-  const generalApiInterface = axios.create({
-    baseURL: `http://localhost:3000/api/v1/diary/${Number(diaryId)}`,
-    headers: {
-      uid: Cookies.get("uid"),
-      client: Cookies.get("client"),
-      access_token: Cookies.get("access-token"),
-    },
-  });
-
   //削除API
-  function UseFeathDiaryDelete() {
-    generalApiInterface
-      .delete(`http://localhost:3000/api/v1/diary/${Number(diaryId)}`, {
-        headers: {
-          uid: Cookies.get("uid"),
-          client: Cookies.get("client"),
-          access_token: Cookies.get("access-token"),
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        navigation("/diary", { state: `タイトル:${title}を削除にしました` });
-        return 0;
-      })
-      .catch(function (error) {
-        const errorResponse = error.response.data;
-        console.log(errorResponse.message);
-        return 0;
-      });
-  }
+  const deleteDiaryDeta = async () => {
+    const response: any = await deleteDiary(diaryId);
+    console.log(response);
+    if (response.status == 200) {
+      navigation("/diary", { state: `タイトル:${title}を削除にしました` });
+    } else {
+      console.log("NG");
+    }
+  };
 
   const SuccsesElm = (
     <>
@@ -226,7 +206,7 @@ export default function GetDiiaryDetail() {
                   variant="contained"
                   color="warning"
                   sx={{ minWidth: 100 }}
-                  onClick={() => UseFeathDiaryDelete()}
+                  onClick={() => deleteDiaryDeta()}
                 >
                   削除
                 </Button>

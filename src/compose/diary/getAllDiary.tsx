@@ -41,7 +41,6 @@ export default function GetAllDiary() {
           });
         })
         .catch(function (error) {
-          console.log(error.response.data);
           setIsStatus(false);
           return;
         });

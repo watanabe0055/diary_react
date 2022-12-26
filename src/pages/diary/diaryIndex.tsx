@@ -9,7 +9,6 @@ export default function DiaryIndex() {
   const location = useLocation();
   const [succes, setSucces] = useState();
 
-  console.log(location.state);
   const Render = () => {
     if (location.state != null) {
       return (

@@ -14,7 +14,6 @@ export const featchDiary: any = (diary_id: number) => {
       })
       .then((res) => {
         const diaryDetail: any = [res.data.diary];
-        //console.log(diaryDetail[0]);
         if (diaryDetail == "unknown") {
           return "test";
         } else {
@@ -22,7 +21,6 @@ export const featchDiary: any = (diary_id: number) => {
         }
       })
       .catch(function (error) {
-        console.log(error.response.data);
         reject(error.response.data);
       });
     return;
