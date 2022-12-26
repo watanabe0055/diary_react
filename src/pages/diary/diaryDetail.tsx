@@ -13,6 +13,7 @@ import {
 //自作コンポーネント
 import Error from "../../pages/error";
 import DeleteDiaryDeta from "../../modules/diary/deleteDiaryDeta";
+import { featchDiary } from "../../modules/featchDiary";
 
 //外部ライブラリ
 import axios from "axios";
@@ -51,7 +52,20 @@ const ThreadLink = styled(Link)`
   }
 `;
 
-export default function GetDiiaryDetail(props: any) {
+type diaryInterface = [
+  {
+    id: number;
+    user_id: number;
+    emotion_id: number;
+    diary_hashtag_id: number;
+    title: string;
+    content: string;
+    created_at: any;
+    updated_at: any;
+  }
+];
+
+export default function GetDiiaryDetail() {
   //ページのタイトルを設定
   setDiaryShowPageTitle();
 
@@ -72,43 +86,16 @@ export default function GetDiiaryDetail(props: any) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  type diaryInterface = [
-    id: number,
-    user_id: number,
-    emotion_id: number,
-    diary_hashtag_id: number,
-    title: string,
-    content: string,
-    created_at: any,
-    updated_at: any
-  ];
-
-  function UseFeathDiaryDetail() {
-    useEffect(() => {
-      axios
-        .get(`http://localhost:3000/api/v1/diary/${diary_id}`, {
-          headers: {
-            uid: Cookies.get("uid"),
-            client: Cookies.get("client"),
-            access_token: Cookies.get("access-token"),
-          },
-        })
-        .then((res) => {
-          const diaryDetail: any = [res.data.diary];
-          setDiaryId(diaryDetail[0].id);
-          setTitle(diaryDetail[0].title);
-          setContent(diaryDetail[0].content);
-          setCreatedat(diaryDetail[0].created_at);
-          setIsStatus(true);
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-          setIsStatus(false);
-          return;
-        });
-    }, []);
+  async function fetchDiaryDeta() {
+    // get_data()よりAPIの返り値が返ってくるまで待つ
+    const diaryDeta: any = await featchDiary(diary_id);
+    setDiaryId(diaryDeta.id);
+    setTitle(diaryDeta.title);
+    setContent(diaryDeta.content);
+    setCreatedat(diaryDeta.created_at);
+    setIsStatus(true);
   }
-  UseFeathDiaryDetail();
+  fetchDiaryDeta();
 
   const generalApiInterface = axios.create({
     baseURL: `http://localhost:3000/api/v1/diary/${Number(diaryId)}`,
