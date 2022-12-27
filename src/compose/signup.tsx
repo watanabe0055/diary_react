@@ -19,7 +19,6 @@ export default function Signin() {
 
   //email: "test@example.com",
   //password: "password",
-
   const onButtonClick = () => {
     axios
       .post("http://localhost:3000/api/v1/auth", {
@@ -59,7 +58,6 @@ export default function Signin() {
           メールアドレス
           <br />
           <TextField
-            id="outlined-basic"
             label="メールアドレスを入力してください"
             variant="outlined"
             type="email"
@@ -75,7 +73,6 @@ export default function Signin() {
           パスワード
           <br />
           <TextField
-            id="outlined-basic"
             label="パスワードを入力してください"
             variant="outlined"
             type="password"
@@ -90,7 +87,6 @@ export default function Signin() {
           パスワード確認用
           <br />
           <TextField
-            id="outlined-basic"
             label="確認用パスワードを入力してください"
             type="password"
             size="small"

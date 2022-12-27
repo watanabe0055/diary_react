@@ -14,6 +14,7 @@ import {
 import Error from "../../pages/error";
 import { featchDiary } from "../../modules/featchDiary";
 import { deleteDiary } from "../../modules/diary/diaryDelete";
+import Header from "../../atom/header";
 
 //外部ライブラリ
 import axios from "axios";
@@ -240,5 +241,17 @@ export default function GetDiiaryDetail() {
       return <>{Error()}</>;
     }
   };
-  return <>{Render()}</>;
+  return (
+    <>
+      <Header />
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+      >
+        {Render()}
+      </Grid>
+    </>
+  );
 }

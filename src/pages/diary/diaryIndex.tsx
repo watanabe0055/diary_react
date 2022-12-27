@@ -31,7 +31,6 @@ export default function DiaryIndex() {
         direction="column"
       >
         <div>Diary一覧</div>
-
         <div>{Render()}</div>
         <GetAllDiary />
       </Grid>

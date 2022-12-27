@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 //自作コンポーネント
 import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
+import Header from "../../atom/header";
 
 //外部ライブラリ
 import axios from "axios";
@@ -15,6 +16,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
+import { Grid } from "@mui/material";
 
 const TextFiledBlock = styled.div`
   margin-top: 20px;
@@ -205,5 +207,17 @@ export default function DiaryEdit() {
       </div>
     </>
   );
-  return <>{Render()}</>;
+  return (
+    <>
+      <Header />
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+      >
+        {Render()}
+      </Grid>
+    </>
+  );
 }
