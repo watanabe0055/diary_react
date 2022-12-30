@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 import Header from "../../atom/header";
+import { diaryEdit } from "../../modules/diary/diaryEdit";
 
 //外部ライブラリ
 import axios from "axios";
@@ -39,7 +40,7 @@ export default function DiaryEdit() {
   const params = useParams();
   const navigation = useNavigate();
 
-  const [diaryId, setDiaryId] = useState("");
+  const [diaryId, setDiaryId] = useState(0);
 
   const [title, setTitle] = useState("");
   const [titleCount, setTitleCount] = useState(100);
@@ -100,18 +101,27 @@ export default function DiaryEdit() {
         });
     }, []);
   }
-
   UseFeathDiaryDetail();
+
+  //編集のオンクリックイベント
+  const onClickDiaryEdit = async () => {
+    const resuponse: any = await diaryEdit(diaryId, title, content);
+    console.log(resuponse[0]);
+    if (resuponse[0] === 200) {
+      navigation("/diary", {
+        state: `${resuponse[1]}の編集に成功しました！！`,
+      });
+    } else if (resuponse[0] != 200) {
+      console.log("ヴァリデーション");
+      setTitleValidation(resuponse[0]);
+      setContentValidation(resuponse[1]);
+    }
+  };
 
   //編集APIの実行
   function UseFeathDiaryEdit() {
     generalApiInterface
       .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
-        headers: {
-          uid: Cookies.get("uid"),
-          client: Cookies.get("client"),
-          access_token: Cookies.get("access-token"),
-        },
         title: title,
         content: content,
         //emotion_id: "2",
@@ -197,7 +207,7 @@ export default function DiaryEdit() {
         <ErrorMessage>{contentValidation}</ErrorMessage>
         <Counter>後{countCount}文字入力可能です</Counter>
         <Button
-          onClick={() => UseFeathDiaryEdit()}
+          onClick={() => onClickDiaryEdit()}
           variant="contained"
           endIcon={<SendIcon />}
           sx={{ marginTop: "20px", width: "230px" }}
