@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 //マテリアル UI
 import TextField from "@mui/material/TextField";
 import { Button, Grid, Box } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 //API用のライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import Paper from "@mui/material/Paper";
-
+import { baseUrl } from "../modules/baseUrl";
 export default function Signin() {
   //サインインのパラメータ
   const [email, setEail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigate();
 
   //email: "test@example.com",
   //password: "password",
@@ -20,6 +24,16 @@ export default function Signin() {
     email: email,
     password: password,
   };
+
+  const BASEURL: any = baseUrl();
+  const generalApiInterface = axios.create({
+    baseURL: BASEURL,
+    headers: {
+      uid: Cookies.get("uid"),
+      client: Cookies.get("client"),
+      access_token: Cookies.get("access-token"),
+    },
+  });
 
   const option: any = {
     method: "POST",
@@ -31,8 +45,8 @@ export default function Signin() {
   };
 
   const onButtonClick = () => {
-    axios
-      .post("http://localhost:3000/api/v1/auth/sign_in", {
+    generalApiInterface
+      .post("auth/sign_in", {
         email: email,
         password: password,
       })
@@ -45,6 +59,9 @@ export default function Signin() {
           Cookies.set("client", client);
           Cookies.set("access-token", token);
           Cookies.set("uid", uid);
+          navigation("/diary", {
+            state: `ログインに成功しました！！`,
+          });
         }
       })
       .catch(function (error) {
