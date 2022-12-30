@@ -63,8 +63,10 @@ export default function DiaryEdit() {
   const BASE_URL: any = process.env.REACT_APP_BASE_URL;
   console.log(process.env.NODE_ENV);
   let BASEURL: any;
-  if (process.env.NODE_ENV) {
+  if (process.env.NODE_ENV === "development") {
     BASEURL = `http://localhost:3000/api/v1/diary/`;
+  } else if (process.env.NODE_ENV === "production") {
+    BASEURL = `http://ec2-13-115-221-170.ap-northeast-1.compute.amazonaws.com/`;
   }
 
   //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
