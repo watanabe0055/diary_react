@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 //自作コンポーネント
 import Error from "../../pages/error";
-import { featchDiary } from "../../modules/featchDiary";
+import { featchDiary } from "../../modules/diary/featchDiary";
 import { deleteDiary } from "../../modules/diary/diaryDelete";
 import Header from "../../atom/header";
 

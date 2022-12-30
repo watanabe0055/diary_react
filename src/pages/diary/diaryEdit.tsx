@@ -103,13 +103,11 @@ export default function DiaryEdit() {
   //編集のオンクリックイベント
   const onClickDiaryEdit = async () => {
     const resuponse: any = await diaryEdit(diaryId, title, content);
-    console.log(resuponse[0]);
     if (resuponse[0] === 200) {
       navigation("/diary", {
         state: `${resuponse[1]}の編集に成功しました！！`,
       });
     } else if (resuponse[0] != 200) {
-      console.log("ヴァリデーション");
       setTitleValidation(resuponse[0]);
       setContentValidation(resuponse[1]);
     }
