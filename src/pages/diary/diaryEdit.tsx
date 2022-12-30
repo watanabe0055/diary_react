@@ -41,15 +41,12 @@ export default function DiaryEdit() {
   const navigation = useNavigate();
 
   const [diaryId, setDiaryId] = useState(0);
-
   const [title, setTitle] = useState("");
   const [titleCount, setTitleCount] = useState(100);
   const [titleValidation, setTitleValidation] = useState("");
-
   const [content, setContent] = useState("");
   const [countCount, setCountCount] = useState(4000);
   const [contentValidation, setContentValidation] = useState("");
-
   const [createdat, setCreatedat] = useState("");
   const [isStatus, setIsStatus] = useState(true);
 
@@ -117,32 +114,6 @@ export default function DiaryEdit() {
       setContentValidation(resuponse[1]);
     }
   };
-
-  //編集APIの実行
-  function UseFeathDiaryEdit() {
-    generalApiInterface
-      .patch(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
-        title: title,
-        content: content,
-        //emotion_id: "2",
-      })
-      .then((res) => {
-        navigation("/diary", { state: "Diaryの編集に成功しました！！" });
-      })
-      .catch(function (error) {
-        const errorResponse = error.response.data;
-        setTitleValidation("");
-        setContentValidation("");
-        if (errorResponse.message.title) {
-          setTitleValidation("タイトルは1文字以上100文字以下にしてください");
-        }
-        if (errorResponse.message.content) {
-          setContentValidation(
-            "コンテンツは1文字以上4000文字以下にしてください"
-          );
-        }
-      });
-  }
 
   //フロントに400を出すか判断する
   const Render = () => {
