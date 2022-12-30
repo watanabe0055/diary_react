@@ -60,9 +60,16 @@ export default function DiaryEdit() {
     setCountCount(4000 - content.length);
   };
 
+  const BASE_URL: any = process.env.REACT_APP_BASE_URL;
+  console.log(process.env.NODE_ENV);
+  let BASEURL: any;
+  if (process.env.NODE_ENV) {
+    BASEURL = `http://localhost:3000/api/v1/diary/`;
+  }
+
   //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
   const generalApiInterface = axios.create({
-    baseURL: `http://localhost:3000/api/v1/diary/${Number(params.id)}`,
+    baseURL: BASEURL,
     headers: {
       uid: Cookies.get("uid"),
       client: Cookies.get("client"),
@@ -74,14 +81,8 @@ export default function DiaryEdit() {
   //即時実行してます
   function UseFeathDiaryDetail() {
     useEffect(() => {
-      axios
-        .get(`http://localhost:3000/api/v1/diary/${Number(params.id)}`, {
-          headers: {
-            uid: Cookies.get("uid"),
-            client: Cookies.get("client"),
-            access_token: Cookies.get("access-token"),
-          },
-        })
+      generalApiInterface
+        .get(`${Number(params.id)}`)
         .then((res) => {
           const diaryDetail: any = [res.data.diary];
           setDiaryId(diaryDetail[0].id);
