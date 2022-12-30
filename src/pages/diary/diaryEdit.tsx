@@ -77,7 +77,7 @@ export default function DiaryEdit() {
   function UseFeathDiaryDetail() {
     useEffect(() => {
       generalApiInterface
-        .get(`${Number(params.id)}`)
+        .get(`diary/${Number(params.id)}`)
         .then((res) => {
           const diaryDetail: any = [res.data.diary];
           setDiaryId(diaryDetail[0].id);
