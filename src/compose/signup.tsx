@@ -35,7 +35,7 @@ export default function Signin() {
   });
   const onButtonClick = () => {
     generalApiInterface
-      .post(`${BASEURL}auth`, {
+      .post(`auth`, {
         email: email,
         password: password,
         password_confirmation: passwordConfirmation,
