@@ -23,3 +23,7 @@
 
 ・React：18
 ・TypeScript
+
+# デプロイ先
+amplifyapp
+https://main.d3ia8kxckpprfj.amplifyapp.com/login
