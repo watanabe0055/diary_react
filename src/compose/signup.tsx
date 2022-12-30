@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 //マテリアル UI
 import TextField from "@mui/material/TextField";
 import { Button, Grid, Box } from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 //API用のライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import Paper from "@mui/material/Paper";
+import { baseUrl } from "../modules/baseUrl";
 
 export default function Signin() {
   //サインインのパラメータ
@@ -19,9 +20,18 @@ export default function Signin() {
 
   //email: "test@example.com",
   //password: "password",
+  const BASEURL: any = baseUrl();
+  const generalApiInterface = axios.create({
+    baseURL: BASEURL,
+    headers: {
+      uid: Cookies.get("uid"),
+      client: Cookies.get("client"),
+      access_token: Cookies.get("access-token"),
+    },
+  });
   const onButtonClick = () => {
-    axios
-      .post("http://localhost:3000/api/v1/auth", {
+    generalApiInterface
+      .post(`${BASEURL}auth`, {
         email: email,
         password: password,
         password_confirmation: passwordConfirmation,
