@@ -7,6 +7,7 @@ import Error from "../error";
 import { setDiaryEditPageTitle } from "../../modules/setPageTitle";
 import Header from "../../atom/header";
 import { diaryEdit } from "../../modules/diary/diaryEdit";
+import { baseUrl } from "../../modules/baseUrl";
 
 //外部ライブラリ
 import axios from "axios";
@@ -60,15 +61,7 @@ export default function DiaryEdit() {
     setCountCount(4000 - content.length);
   };
 
-  const BASE_URL: any = process.env.REACT_APP_BASE_URL;
-  console.log(process.env.NODE_ENV);
-  let BASEURL: any;
-  if (process.env.NODE_ENV === "development") {
-    BASEURL = `http://localhost:3000/api/v1/diary/`;
-  } else if (process.env.NODE_ENV === "production") {
-    BASEURL = `http://ec2-13-115-221-170.ap-northeast-1.compute.amazonaws.com/`;
-  }
-
+  const BASEURL: any = baseUrl();
   //devise認証用のヘッダー情報（apiを叩く時と同時はできない）
   const generalApiInterface = axios.create({
     baseURL: BASEURL,
