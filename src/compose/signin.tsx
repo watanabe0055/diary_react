@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 //マテリアル UI
 import TextField from "@mui/material/TextField";
 import { Button, Grid, Box } from "@mui/material";
@@ -13,6 +15,8 @@ export default function Signin() {
   //サインインのパラメータ
   const [email, setEail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigate();
 
   //email: "test@example.com",
   //password: "password",
@@ -55,6 +59,9 @@ export default function Signin() {
           Cookies.set("client", client);
           Cookies.set("access-token", token);
           Cookies.set("uid", uid);
+          navigation("/diary", {
+            state: `ログインに成功しました！！`,
+          });
         }
       })
       .catch(function (error) {

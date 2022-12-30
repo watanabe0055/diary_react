@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 //マテリアル UI
 import TextField from "@mui/material/TextField";
 import { Button, Grid, Box } from "@mui/material";
@@ -15,6 +17,8 @@ export default function Signin() {
   const [email, setEail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  const navigation = useNavigate();
 
   const deviseSinginApi = "http://localhost:3000/api/v1/auth";
 
@@ -44,6 +48,9 @@ export default function Signin() {
           Cookies.set("client", client);
           Cookies.set("access-token", token);
           Cookies.set("uid", uid);
+          navigation("/diary", {
+            state: `サインアップに成功しました！！`,
+          });
         }
       })
       .catch(function (error) {
