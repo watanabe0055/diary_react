@@ -69,7 +69,6 @@ export default function Signin() {
           メールアドレス
           <br />
           <TextField
-            id="outlined-basic"
             label="メールアドレスを入力してください"
             variant="outlined"
             type="email"
@@ -85,7 +84,6 @@ export default function Signin() {
           パスワード
           <br />
           <TextField
-            id="outlined-basic"
             label="パスワードを入力してください"
             variant="outlined"
             type="password"

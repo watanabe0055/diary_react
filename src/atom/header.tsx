@@ -19,7 +19,7 @@ const HeaderMargin = styled.div`
   margin-bottom: 40px;
 `;
 
-export default function header() {
+export default function Header() {
   return (
     <>
       <HeaderMargin>
@@ -30,6 +30,9 @@ export default function header() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 DIARY
               </Typography>
+
+              <Link to={"/diary"}>一覧</Link>
+              <Link to={"/diary/register"}>登録</Link>
             </Toolbar>
           </AppBar>
         </Box>

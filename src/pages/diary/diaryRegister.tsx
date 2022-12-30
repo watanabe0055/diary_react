@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+//自作コンポーネント
+import Header from "../../atom/header";
+
 //外部ライブラリ
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -11,6 +14,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
+import { Grid } from "@mui/material";
 
 const TextFiledBlock = styled.div`
   margin-top: 20px;
@@ -148,8 +152,16 @@ export default function DiaryRegister() {
 
   return (
     <>
-      <div>新規作成画面</div>
-      <div>{SuccsesElm}</div>
+      <Header />
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+      >
+        <div>新規作成画面</div>
+        <div>{SuccsesElm}</div>
+      </Grid>
     </>
   );
 }

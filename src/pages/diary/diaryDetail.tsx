@@ -1,23 +1,15 @@
 //hooks
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  BrowserRouter,
-  Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //自作コンポーネント
 import Error from "../../pages/error";
 import { featchDiary } from "../../modules/featchDiary";
 import { deleteDiary } from "../../modules/diary/diaryDelete";
+import Header from "../../atom/header";
 
 //外部ライブラリ
-import axios from "axios";
-import Cookies from "js-cookie";
 import moment from "moment";
 import styled from "styled-components";
 
@@ -74,7 +66,6 @@ export default function GetDiiaryDetail() {
   //urlのidを取得して編集APIのkeyにする
   const location = useLocation();
   const { diary_id } = (location.state as State) || 0;
-
   const [diaryId, setDiaryId] = useState(0);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -86,6 +77,7 @@ export default function GetDiiaryDetail() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  //diary詳細を取得する
   async function fetchDiaryDeta() {
     // get_data()よりAPIの返り値が返ってくるまで待つ
     const diaryDeta: any = await featchDiary(diary_id);
@@ -100,10 +92,11 @@ export default function GetDiiaryDetail() {
   //削除API
   const deleteDiaryDeta = async () => {
     const response: any = await deleteDiary(diaryId);
-    console.log(response);
-    if (response.status == 200) {
+    if (response.status === 200) {
       navigation("/diary", { state: `タイトル:${title}を削除にしました` });
-    } else {
+    }
+    //TODO; 400が返ってきた際の処理を入れる
+    else {
       console.log("NG");
     }
   };
@@ -240,5 +233,17 @@ export default function GetDiiaryDetail() {
       return <>{Error()}</>;
     }
   };
-  return <>{Render()}</>;
+  return (
+    <>
+      <Header />
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        direction="column"
+      >
+        {Render()}
+      </Grid>
+    </>
+  );
 }

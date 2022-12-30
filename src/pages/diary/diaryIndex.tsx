@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import GetAllDiary from "../../compose/diary/getAllDiary";
+import Header from "../../atom/header";
 
 import { Grid } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -22,6 +23,7 @@ export default function DiaryIndex() {
   };
   return (
     <>
+      <Header />
       <Grid
         container
         alignItems="center"
