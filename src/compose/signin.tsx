@@ -35,15 +35,6 @@ export default function Signin() {
     },
   });
 
-  const option: any = {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(params),
-  };
-
   const onButtonClick = () => {
     generalApiInterface
       .post("auth/sign_in", {

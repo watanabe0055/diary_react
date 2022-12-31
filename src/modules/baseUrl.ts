@@ -4,7 +4,7 @@ export const baseUrl = () => {
   if (process.env.NODE_ENV === "development") {
     BASEURL = `http://localhost:3000/api/v1/`;
   } else if (process.env.NODE_ENV === "production") {
-    BASEURL = `http://ec2-13-115-221-170.ap-northeast-1.compute.amazonaws.com/`;
+    BASEURL = `http://ec2-13-115-221-170.ap-northeast-1.compute.amazonaws.com/api/v1/`;
   }
   return BASEURL;
 };
